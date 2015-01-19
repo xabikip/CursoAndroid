@@ -1,2 +1,2 @@
 # CursoAndroid
-Ejercicios para el curo de programación Android
+Ejercicios para el curso de programación Android
