@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Login</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="pass">Pass: </string>
+    <string name="passHint">Su contraseña</string>
+    
+    <string name="entrar">Entrar</string>
+    
+    <string name="mensaje">Contraseña correcta</string>
+
+</resources>
