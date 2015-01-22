@@ -13,6 +13,7 @@ public class Persona implements Serializable {
 	private String apellido="";
 	private String telf="";
 	private String desc="";
+	private String grupo="";
 	
 	public Persona(String nombre, String apellido, String telf, String desc)
 	{

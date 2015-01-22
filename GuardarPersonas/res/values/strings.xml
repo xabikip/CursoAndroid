@@ -26,5 +26,11 @@
     <string name="title_activity_guardar">GuardarActivity</string>
     <string name="title_activity_buscar">Buscar</string>
     <string name="hello_world">Hello world!</string>
+    
+    <string name="mensaje">¿Estas seguro de que quieres eliminar?</string>
+    <string name="titulo">Eliminar</string>
+    
+    <string name="ok">Aceptar</string>
+    <string name="cancel">Cancelar</string>
 
 </resources>

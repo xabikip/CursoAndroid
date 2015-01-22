@@ -1,6 +1,8 @@
 package com.example.guardarpersonas;
 
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,14 +11,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class GuardarActivity extends Activity implements OnClickListener, OnFocusChangeListener {
 
 	private EditText nombre, apellido, telf, desc;
 	private Button btnGuardar, btnCancelar;
+	private ArrayList<String> alLista = new ArrayList<String>();
+	private ListView listView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,18 @@ public class GuardarActivity extends Activity implements OnClickListener, OnFocu
 			telf.setText(i.getExtras().getString("telf"));
 			desc.setText(i.getExtras().getString("desc"));
 		}
+		
+		alLista.add("familia");
+		alLista.add("amigos");
+		alLista.add("trabajo");
+		alLista.add("cuadrilla");
+		alLista.add("clase");
+		
+
+		Spinner sLista = (Spinner)findViewById(R.id.grupos);
+		ArrayAdapter<String> adaptador = new ArrayAdapter<String>(
+						this, android.R.layout.simple_list_item_1, alLista);
+		sLista.setAdapter(adaptador);
 	}
 
 	@Override

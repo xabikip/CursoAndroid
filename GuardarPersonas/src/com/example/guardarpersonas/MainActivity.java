@@ -5,6 +5,8 @@ import java.util.Iterator;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -80,25 +82,38 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 		else if (v.getId()==R.id.borrar)
 		{	
-			arrayButton.get(IdSeleccionado).setVisibility(View.GONE);
-			arrayButton.remove(IdSeleccionado);
-			arrayPersonas.remove(IdSeleccionado);
-			int index=0;
-			Iterator<Button> miIterator = arrayButton.iterator();
-			while(miIterator.hasNext()){
-				Button elemento = miIterator.next();
-				elemento.setId(index);
-				elemento.setText(String.valueOf(index+1));
-				index++;
-			}
-			nombre.setText("");
-			apellido.setText("");
-			telf.setText("");
-			desc.setText("");
-			btnEditar.setEnabled(false);
-    		btnBorrar.setEnabled(false);
-    		btnNuevo.setEnabled(true);
-			
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(R.string.mensaje)
+		           .setTitle(R.string.titulo);
+			builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		        	    arrayButton.get(IdSeleccionado).setVisibility(View.GONE);
+			   			arrayButton.remove(IdSeleccionado);
+			   			arrayPersonas.remove(IdSeleccionado);
+			   			int index=0;
+			   			Iterator<Button> miIterator = arrayButton.iterator();
+			   			while(miIterator.hasNext()){
+			   				Button elemento = miIterator.next();
+			   				elemento.setId(index);
+			   				elemento.setText(String.valueOf(index+1));
+			   				index++;
+			   			}
+			   			nombre.setText("");
+			   			apellido.setText("");
+			   			telf.setText("");
+			   			desc.setText("");
+			   			btnEditar.setEnabled(false);
+			       		btnBorrar.setEnabled(false);
+			       		btnNuevo.setEnabled(true);
+		           }
+		       });
+			builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		               // User cancelled the dialog
+		           }
+		       });
+			AlertDialog dialog = builder.create();
+			dialog.show();		
 		}
 		else if (v.getId()==R.id.editar)
 		{	

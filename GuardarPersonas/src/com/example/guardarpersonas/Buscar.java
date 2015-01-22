@@ -108,7 +108,7 @@ public class Buscar extends Activity implements OnClickListener, OnCheckedChange
 				    	 crearBoton(pers);
 				     }  
 				  }
-			}else if(this.checked.equals("telf")){
+			}else if(this.checked.equals("desc")){
 				Iterator<Persona> itr = arrayPersonas.iterator();
 				 while(itr.hasNext()) {
 				     Persona pers = itr.next();
