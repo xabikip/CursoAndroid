@@ -18,7 +18,9 @@
     <string name="telfLabel">Telefono</string>
     <string name="telfHint">Introduce tu telefono</string>
     <string name="descLabel">Descripcion</string>
+    <string name="grupoLabel">Grupo</string>
     <string name="descHint">Introduce la descripcion</string>
+    <string name="grupoHint">Introduce la descripcion</string>
     <string name="nombreBuscarHint">por nombre</string>
     <string name="apellidoBuscarHint">por apellido</string>
     <string name="telfBuscarHint">por telefono</string>

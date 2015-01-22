@@ -11,10 +11,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class Buscar extends Activity implements OnClickListener, OnCheckedChangeListener {
@@ -25,10 +27,12 @@ public class Buscar extends Activity implements OnClickListener, OnCheckedChange
 	private ArrayList<Persona> arrayPersonas = new ArrayList<Persona>();
 	private ArrayList<Persona> arrayPersBuscadas = new ArrayList<Persona>();
 	private ArrayList<Button> arrayButton = new ArrayList<Button>();
+	private ArrayList<String> alLista = new ArrayList<String>();
 	private String checked;
 	private int IdSeleccionado;
 	private LinearLayout ll;
 	private Intent i;
+	private Spinner sLista;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,17 @@ public class Buscar extends Activity implements OnClickListener, OnCheckedChange
 		rg.setOnCheckedChangeListener(this);
 		i = getIntent();
 		arrayPersonas = (ArrayList<Persona>) i.getExtras().getSerializable("personas");
+		
+		alLista.add("familia");
+		alLista.add("amigos");
+		alLista.add("trabajo");
+		alLista.add("cuadrilla");
+		alLista.add("clase");
+		
+		sLista = (Spinner)findViewById(R.id.gruposBuscar);
+		ArrayAdapter<String> adaptador = new ArrayAdapter<String>(
+						this, android.R.layout.simple_list_item_1, alLista);
+		sLista.setAdapter(adaptador);
 
 	}
 
@@ -117,12 +132,22 @@ public class Buscar extends Activity implements OnClickListener, OnCheckedChange
 				     }  
 				  }
 				
+			}else if(this.checked.equals("grupo")){
+				Iterator<Persona> itr = arrayPersonas.iterator();
+				 while(itr.hasNext()) {
+				     Persona pers = itr.next();
+				     if(pers.getGrupo().contains(sLista.getSelectedItem().toString())){
+				    	 crearBoton(pers);
+				     }  
+				  }
+				
 			}	
 		}else if(v.getId()==R.id.aceptar){
 			i.putExtra("nombre", etNombre.getText().toString());
 			i.putExtra("apellido", etApellido.getText().toString());
 			i.putExtra("telf", etTelf.getText().toString());
 			i.putExtra("desc", etDesc.getText().toString());
+			i.putExtra("grupo", sLista.getSelectedItem().toString());
 			i.putExtra("accion", "aceptar");
 			setResult(RESULT_OK, i);
 			finish();
@@ -175,6 +200,13 @@ public class Buscar extends Activity implements OnClickListener, OnCheckedChange
              etTelf.setEnabled(false);
              etDesc.setEnabled(true);
              this.checked = "desc";
+         }else if (checkedId == R.id.grupoRadio){
+        	 etNombre.setEnabled(false);
+             etApellido.setEnabled(false);
+             etTelf.setEnabled(false);
+             etDesc.setEnabled(false);
+             this.checked = "grupo";
+             System.out.println("Hemen baiiiii");
          }
 		
 	}

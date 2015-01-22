@@ -15,12 +15,13 @@ public class Persona implements Serializable {
 	private String desc="";
 	private String grupo="";
 	
-	public Persona(String nombre, String apellido, String telf, String desc)
+	public Persona(String nombre, String apellido, String telf, String desc, String grupo)
 	{
 		this.nombre=nombre;
 		this.apellido=apellido;
 		this.telf=telf;
 		this.desc=desc;
+		this.grupo=grupo;
 	}
 
 	public String getNombre() {
@@ -53,6 +54,14 @@ public class Persona implements Serializable {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+	
+	public String getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(String grupo) {
+		this.grupo = grupo;
 	}
 
 }

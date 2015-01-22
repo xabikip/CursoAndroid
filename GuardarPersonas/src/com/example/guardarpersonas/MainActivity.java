@@ -15,11 +15,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 public class MainActivity extends Activity implements OnClickListener {
 	
 	private Button btnNuevo, btnEditar, btnBorrar, btnBuscar;
-	private EditText nombre, apellido, telf, desc;
+	private EditText nombre, apellido, telf, desc, grupo;
 	private LinearLayout Gl;
 	private ArrayList<Persona> arrayPersonas = new ArrayList<Persona>();
 	private ArrayList<Button> arrayButton = new ArrayList<Button>();
@@ -39,6 +40,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		apellido=(EditText)findViewById(R.id.apellido);
 		telf=(EditText)findViewById(R.id.telf);
 		desc=(EditText)findViewById(R.id.desc);
+		grupo=(EditText)findViewById(R.id.grupo);
 		Gl=(LinearLayout)findViewById(R.id.botones);
 		btnNuevo.setOnClickListener(this);
 		btnEditar.setOnClickListener(this);
@@ -50,6 +52,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		apellido.setEnabled(false);
 		telf.setEnabled(false);
 		desc.setEnabled(false);
+		grupo.setEnabled(false);
+
 	}
 
 	@Override
@@ -102,6 +106,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			   			apellido.setText("");
 			   			telf.setText("");
 			   			desc.setText("");
+			   			grupo.setText("");
 			   			btnEditar.setEnabled(false);
 			       		btnBorrar.setEnabled(false);
 			       		btnNuevo.setEnabled(true);
@@ -122,6 +127,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			i.putExtra("apellido", apellido.getText().toString());
 			i.putExtra("telf", telf.getText().toString());
 			i.putExtra("desc", desc.getText().toString());
+			i.putExtra("grupo", grupo.getText().toString());
 			i.putExtra("id", arrayPersonas.get(IdSeleccionado).toString());
 			i.putExtra("accion", "edit");
 			startActivityForResult(i,1);
@@ -141,7 +147,8 @@ public class MainActivity extends Activity implements OnClickListener {
 				arrayPersonas.add(new Persona(intent.getExtras().getString("nombre"), 
 						intent.getExtras().getString("apellido"), 
 						intent.getExtras().getString("telf"), 
-						intent.getExtras().getString("desc")));
+						intent.getExtras().getString("desc"),
+						intent.getExtras().getString("grupo")));
 				Button bt = new Button(this);
 				arrayButton.add(bt);
 				bt.setText(String.valueOf(arrayButton.size()));
@@ -153,6 +160,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		            	apellido.setText(arrayPersonas.get(view.getId()).getApellido());
 		            	telf.setText(arrayPersonas.get(view.getId()).getTelf());
 		            	desc.setText(arrayPersonas.get(view.getId()).getDesc());
+		            	grupo.setText(arrayPersonas.get(view.getId()).getGrupo());
 		            	btnEditar.setEnabled(true);
 		        		btnBorrar.setEnabled(true);
 		        		btnNuevo.setEnabled(true);
@@ -171,10 +179,12 @@ public class MainActivity extends Activity implements OnClickListener {
 				arrayPersonas.get(IdSeleccionado).setApellido(intent.getExtras().getString("apellido"));
 				arrayPersonas.get(IdSeleccionado).setTelf(intent.getExtras().getString("telf"));
 				arrayPersonas.get(IdSeleccionado).setDesc(intent.getExtras().getString("desc"));
+				arrayPersonas.get(IdSeleccionado).setGrupo(intent.getExtras().getString("grupo"));
 				nombre.setText(arrayPersonas.get(IdSeleccionado).getNombre());
 				apellido.setText(arrayPersonas.get(IdSeleccionado).getApellido());
 				telf.setText(arrayPersonas.get(IdSeleccionado).getTelf());
 				desc.setText(arrayPersonas.get(IdSeleccionado).getDesc());
+				grupo.setText(arrayPersonas.get(IdSeleccionado).getGrupo());
 			}
 		}else {
 			

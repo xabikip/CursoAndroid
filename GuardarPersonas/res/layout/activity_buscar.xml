@@ -49,6 +49,10 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:hint="@string/descBuscarHint" />
+         <Spinner
+		    android:id="@+id/gruposBuscar"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content" />
     </LinearLayout>
     	
    	<LinearLayout
@@ -102,6 +106,7 @@
 	       <RadioButton android:id="@+id/apellidoRadio" />
 	       <RadioButton android:id="@+id/telfRadio" />
 	       <RadioButton android:id="@+id/descRadio" />
+	       <RadioButton android:id="@+id/grupoRadio" />
 	       
 	   </RadioGroup>
         

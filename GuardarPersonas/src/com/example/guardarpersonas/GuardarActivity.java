@@ -24,6 +24,9 @@ public class GuardarActivity extends Activity implements OnClickListener, OnFocu
 	private Button btnGuardar, btnCancelar;
 	private ArrayList<String> alLista = new ArrayList<String>();
 	private ListView listView;
+	private Spinner sLista;
+	private String grupo;
+	private int index;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +62,20 @@ public class GuardarActivity extends Activity implements OnClickListener, OnFocu
 		alLista.add("cuadrilla");
 		alLista.add("clase");
 		
-
-		Spinner sLista = (Spinner)findViewById(R.id.grupos);
+		sLista = (Spinner)findViewById(R.id.grupos);
 		ArrayAdapter<String> adaptador = new ArrayAdapter<String>(
 						this, android.R.layout.simple_list_item_1, alLista);
 		sLista.setAdapter(adaptador);
+		
+		grupo = getIntent().getExtras().getString("grupo");
+		
+		for (int cont=0;cont<sLista.getCount();cont++){
+			if(sLista.getItemAtPosition(cont).toString().equals(grupo)){
+				index = cont;
+				break;
+			}
+		}
+		sLista.setSelection(index);
 	}
 
 	@Override
@@ -95,6 +107,7 @@ public class GuardarActivity extends Activity implements OnClickListener, OnFocu
 				i.putExtra("apellido",apellido.getText().toString());
 				i.putExtra("telf",telf.getText().toString());
 				i.putExtra("desc",desc.getText().toString());
+				i.putExtra("grupo", sLista.getSelectedItem().toString());
 				if(i.getExtras().getString("accion").equals("new")){
 					i.putExtra("accion","new");
 				}else{
