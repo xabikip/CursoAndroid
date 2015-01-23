@@ -42,3 +42,4 @@ proguard/
 
 # Log Files
 *.log
+/GuardarPersonas/
