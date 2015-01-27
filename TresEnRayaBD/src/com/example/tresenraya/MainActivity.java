@@ -81,6 +81,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if (v.getId()==R.id.empezar && bEmpezar.getText().toString().equals("Empezar")){
+			this.a = 0;
+			this.b = 0;
 			habilitarBotones(true);
 			bEmpezar.setText("Salir");
 			this.judador = "x";
@@ -191,13 +193,13 @@ public class MainActivity extends Activity implements OnClickListener {
 		if(tresDBRead.isOpen()){
 			Cursor c = tresDBRead.query("RESULTADO", campos, null, null, null, null, "_ID");
 			if(c.moveToFirst()){
-				while(c.moveToNext()){
+				do{
 					if(c.getString(c.getColumnIndex("GANADOR")).equals("0")){
 						a++;
 					}else if(c.getString(c.getColumnIndex("GANADOR")).equals("x")){
 						b++;
 					}
-				}
+				}while(c.moveToNext());
 			}
 			tresDBRead.close();
 		}
