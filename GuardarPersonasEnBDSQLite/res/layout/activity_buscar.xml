@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <Button
+        android:id="@+id/volver"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/form"
+        android:layout_marginBottom="10sp"
+        android:text="@string/volver" />
+
+    <LinearLayout
+        android:id="@+id/form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/lineaBotonesPersona"
+        android:layout_alignRight="@+id/lineaBotones"
+        android:layout_below="@id/volver"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/nombreBuscar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="@string/nombreBuscarHint" />
+
+        <EditText
+            android:id="@+id/apllidoBuscar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="@string/apellidoBuscarHint" />
+
+        <EditText
+            android:id="@+id/telfBuscar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="@string/telfBuscarHint" />
+
+        <EditText
+            android:id="@+id/descBuscar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="@string/descBuscarHint" />
+         <Spinner
+		    android:id="@+id/gruposBuscar"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content" />
+    </LinearLayout>
+    	
+   	<LinearLayout
+   	    android:id="@+id/lineaBotones"
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:orientation="horizontal" 
+   	    android:layout_below="@id/form">
+
+       	<Button
+       	    android:id="@+id/aceptar"
+       	    android:layout_width="wrap_content"
+       	    android:layout_height="wrap_content"
+       	    android:text="@string/aceptar" />
+
+       	<Button
+       	    android:id="@+id/buscar"
+       	    android:layout_width="wrap_content"
+       	    android:layout_height="wrap_content"
+       	    android:text="@string/buscar" />
+       
+   	</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lineaRaditoButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:layout_toRightOf="@id/form"
+        android:layout_below="@id/volver">
+
+
+        
+    </LinearLayout> 
+
+
+   <LinearLayout
+        android:id="@+id/lineaBotonesPersona"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:layout_toRightOf="@id/form"
+        android:layout_below="@id/volver">
+
+	   <RadioGroup
+	       android:id="@+id/radiogrup"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+
+	       <RadioButton android:id="@+id/nombreRadio" />
+	       <RadioButton android:id="@+id/apellidoRadio" />
+	       <RadioButton android:id="@+id/telfRadio" />
+	       <RadioButton android:id="@+id/descRadio" />
+	       <RadioButton android:id="@+id/grupoRadio" />
+	       
+	   </RadioGroup>
+        
+    </LinearLayout>
+    
+</RelativeLayout>

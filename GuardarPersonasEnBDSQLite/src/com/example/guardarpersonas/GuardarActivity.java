@@ -1,0 +1,182 @@
+package com.example.guardarpersonas;
+
+
+import java.util.ArrayList;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+public class GuardarActivity extends Activity implements OnClickListener, OnFocusChangeListener {
+
+	private EditText nombre, apellido, telf, desc;
+	private Button btnGuardar, btnCancelar;
+	private ArrayList<String> alLista = new ArrayList<String>();
+	private ListView listView;
+	private Spinner sLista;
+	private String grupo;
+	private int index;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_guardar);
+		
+		nombre=(EditText)findViewById(R.id.nombreGuardar);
+		apellido=(EditText)findViewById(R.id.apellidoGuardar);
+		telf=(EditText)findViewById(R.id.telfGuardar);
+		desc=(EditText)findViewById(R.id.descGuardar);
+		btnGuardar=(Button)findViewById(R.id.guardar);
+		btnCancelar=(Button)findViewById(R.id.cancelar);
+		
+		btnGuardar.setOnClickListener(this);
+		btnCancelar.setOnClickListener(this);
+		
+		nombre.setOnFocusChangeListener(this);
+		apellido.setOnFocusChangeListener(this);
+		telf.setOnFocusChangeListener(this);
+		desc.setOnFocusChangeListener(this);
+		
+		Intent i = getIntent();
+		if(i.getExtras().getString("accion").equals("edit")){
+			nombre.setText(i.getExtras().getString("nombre"));
+			apellido.setText(i.getExtras().getString("apellido"));
+			telf.setText(i.getExtras().getString("telf"));
+			desc.setText(i.getExtras().getString("desc"));
+		}
+		
+		alLista.add("familia");
+		alLista.add("amigos");
+		alLista.add("trabajo");
+		alLista.add("cuadrilla");
+		alLista.add("clase");
+		
+		sLista = (Spinner)findViewById(R.id.grupos);
+		ArrayAdapter<String> adaptador = new ArrayAdapter<String>(
+						this, android.R.layout.simple_list_item_1, alLista);
+		sLista.setAdapter(adaptador);
+		
+		grupo = getIntent().getExtras().getString("grupo");
+		
+		for (int cont=0;cont<sLista.getCount();cont++){
+			if(sLista.getItemAtPosition(cont).toString().equals(grupo)){
+				index = cont;
+				break;
+			}
+		}
+		sLista.setSelection(index);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.guardar, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onClick(View v) {
+		Intent i = getIntent();
+		if (v.getId()==R.id.guardar)
+		{
+			if(is_empty()){
+				if(i.getExtras().getString("accion").equals("new")){
+					Persona persona = new Persona(nombre.getText().toString(),
+							apellido.getText().toString(), telf.getText().toString(),
+							desc.getText().toString(), sLista.getSelectedItem().toString());
+					int id = persona.save(this);
+					i.putExtra("id",id);
+					i.putExtra("accion","new");
+					setResult(RESULT_OK, i);
+				}else{
+					Persona persona = new Persona(nombre.getText().toString(),
+							apellido.getText().toString(), telf.getText().toString(),
+							desc.getText().toString(), sLista.getSelectedItem().toString());
+					System.out.println(i.getExtras().getInt("id"));
+					int id = i.getExtras().getInt("id");
+					
+					persona.update(this, id);
+					i.putExtra("id", i.getExtras().getInt("id"));
+					i.putExtra("accion","edit");
+					setResult(1, i);
+				}
+				finish();
+			}else{
+				Toast toast = Toast.makeText(this, "Relena todos los campos", Toast.LENGTH_SHORT);
+				toast.show();
+			}
+			
+		}else if(v.getId()==R.id.cancelar){
+			Toast toast1 = Toast.makeText(this, "Ha cancelado la accion", Toast.LENGTH_SHORT);
+			toast1.show();
+			setResult(RESULT_CANCELED, i);
+			finish();
+		}
+		
+	}
+	
+	@Override
+	public void onFocusChange(View v, boolean hasFocus) {
+		if(v.getId()==R.id.nombreGuardar){
+			if(hasFocus){
+				nombre.setText("");
+			}else{
+				nombre.setText(nombre.getText().toString().toUpperCase());
+			}
+		}
+		if(v.getId()==R.id.apellidoGuardar){
+			if(hasFocus){
+				apellido.setText("");
+			}else{
+				apellido.setText(apellido.getText().toString().toUpperCase());
+			}
+		}
+		if(v.getId()==R.id.telfGuardar){
+			if(hasFocus){
+				telf.setText("");
+			}else{
+				telf.setText(telf.getText().toString().toUpperCase());
+			}
+		}
+		if(v.getId()==R.id.descGuardar){
+			if(hasFocus){
+				desc.setText("");
+			}else{
+				desc.setText(desc.getText().toString().toUpperCase());
+			}
+		}
+		
+	}
+	
+	private boolean is_empty() {
+		if(nombre.getText().toString().trim().length() == 0 || apellido.getText().toString().trim().length() == 0 || telf.getText().toString().trim().length() == 0 || desc.getText().toString().trim().length() == 0){
+			return false;
+		}else{
+			return true;
+		}
+	}
+}
