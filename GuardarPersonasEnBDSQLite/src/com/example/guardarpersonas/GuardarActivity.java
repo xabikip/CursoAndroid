@@ -105,20 +105,24 @@ public class GuardarActivity extends Activity implements OnClickListener, OnFocu
 		{
 			if(is_empty()){
 				if(i.getExtras().getString("accion").equals("new")){
-					Persona persona = new Persona(nombre.getText().toString(),
-							apellido.getText().toString(), telf.getText().toString(),
-							desc.getText().toString(), sLista.getSelectedItem().toString());
+					Persona persona = new Persona(
+							nombre.getText().toString().toUpperCase(),
+							apellido.getText().toString().toUpperCase(),
+							telf.getText().toString().toUpperCase(),
+							desc.getText().toString().toUpperCase(),
+							sLista.getSelectedItem().toString().toUpperCase());
 					int id = persona.save(this);
 					i.putExtra("id",id);
 					i.putExtra("accion","new");
 					setResult(RESULT_OK, i);
 				}else{
-					Persona persona = new Persona(nombre.getText().toString(),
-							apellido.getText().toString(), telf.getText().toString(),
-							desc.getText().toString(), sLista.getSelectedItem().toString());
-					System.out.println(i.getExtras().getInt("id"));
+					Persona persona = new Persona(
+							nombre.getText().toString().toUpperCase(),
+							apellido.getText().toString().toUpperCase(), 
+							telf.getText().toString().toUpperCase(),
+							desc.getText().toString().toUpperCase(), 
+							sLista.getSelectedItem().toString().toUpperCase());
 					int id = i.getExtras().getInt("id");
-					
 					persona.update(this, id);
 					i.putExtra("id", i.getExtras().getInt("id"));
 					i.putExtra("accion","edit");
@@ -126,7 +130,7 @@ public class GuardarActivity extends Activity implements OnClickListener, OnFocu
 				}
 				finish();
 			}else{
-				Toast toast = Toast.makeText(this, "Relena todos los campos", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT);
 				toast.show();
 			}
 			
