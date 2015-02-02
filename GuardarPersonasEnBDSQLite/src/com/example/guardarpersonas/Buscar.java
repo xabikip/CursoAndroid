@@ -1,10 +1,15 @@
 package com.example.guardarpersonas;
 
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,7 +26,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class Buscar extends Activity implements OnClickListener, OnCheckedChangeListener {
 	
-	private Button btnVolver, btnAceptar, btnBuscar;
+	private Button btnVolver, btnAceptar, btnBuscar, btnVolcar;
 	private EditText etNombre, etApellido, etTelf, etDesc;
 	private RadioGroup rg;
 	private ArrayList<Persona> arrayPersonas = new ArrayList<Persona>();
@@ -46,6 +51,8 @@ public class Buscar extends Activity implements OnClickListener, OnCheckedChange
 		btnAceptar.setEnabled(false);
 		btnBuscar = (Button)findViewById(R.id.buscar);
 		btnBuscar.setOnClickListener(this);
+		btnVolcar = (Button)findViewById(R.id.volcar);
+		btnVolcar.setOnClickListener(this);
 		
 		etNombre = (EditText)findViewById(R.id.nombreBuscar);
 		etApellido = (EditText)findViewById(R.id.apllidoBuscar);
@@ -149,8 +156,58 @@ public class Buscar extends Activity implements OnClickListener, OnCheckedChange
 			i.putExtra("accion", "aceptar");
 			setResult(RESULT_OK, i);
 			finish();
+		}else if (v.getId()==R.id.volcar){
+			if(this.checked.equals("nombre")){
+				Persona persona = new Persona();
+				arrayPersonas = persona.findAll(this, "nombre");
+				esrcibirFichero(arrayPersonas);
+			}else if(this.checked.equals("apellido")){
+				Persona persona = new Persona();
+				arrayPersonas = persona.findAll(this, "apellido");
+				esrcibirFichero(arrayPersonas);
+			}else if(this.checked.equals("telf")){
+				Persona persona = new Persona();
+				arrayPersonas = persona.findAll(this, "telf");
+				esrcibirFichero(arrayPersonas);
+			}else if(this.checked.equals("desc")){
+				Persona persona = new Persona();
+				arrayPersonas = persona.findAll(this, "desc");
+				esrcibirFichero(arrayPersonas);
+			}else if(this.checked.equals("grupo")){
+				Persona persona = new Persona();
+				arrayPersonas = persona.findAll(this, "grupo");
+				esrcibirFichero(arrayPersonas);
+			}
 		}
 		
+	}
+
+	private void esrcibirFichero(ArrayList<Persona> arrayPersonas) {
+		try {
+			FileOutputStream fichero = openFileOutput("personas.txt", Context.MODE_PRIVATE);
+			DataOutputStream dos = new DataOutputStream(fichero);
+			Iterator<Persona> it = arrayPersonas.iterator();	
+			while(it.hasNext())
+			{	
+				Persona pers = it.next();
+				dos.writeBytes("Nombre: " + pers.getNombre().toString() + "\t");
+				dos.writeBytes("Apellido: "  + pers.getApellido().toString() + "\t");
+				dos.writeBytes("Telefono: " + pers.getTelf().toString() + "\t");
+				dos.writeBytes("Descripcion: " + pers.getDesc().toString() + "\t");
+				dos.writeBytes("Grupo: " + pers.getGrupo().toString() + "\t");
+				dos.writeBytes("\r\n");
+			}
+			dos.close();
+			fichero.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Intent ver = new Intent(this, TablaPersonas.class);
+		startActivity(ver);
 	}
 
 	private void crearBoton(final Persona persona) {

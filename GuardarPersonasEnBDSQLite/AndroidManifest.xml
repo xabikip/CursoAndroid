@@ -30,6 +30,10 @@
             android:name=".Buscar"
             android:label="@string/title_activity_buscar" >
         </activity>
+        <activity
+            android:name=".TablaPersonas"
+            android:label="@string/title_activity_tabla_personas" >
+        </activity>
     </application>
 
 </manifest>

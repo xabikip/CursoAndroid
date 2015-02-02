@@ -144,12 +144,14 @@ public class Persona implements Serializable {
 		
 	}
 	
-	public ArrayList<Persona> findAll(Context contexto){
+	public ArrayList<Persona> findAll(Context contexto, String campo){
+
+		if (campo == null) campo = "_ID";
 		ArrayList<Persona> arrayPersonas = new ArrayList<Persona>();
 		dbHelper = new DBHelper(contexto, "PERSONASDB", null, 1);
 		SQLiteDatabase persDBRead = dbHelper.getReadableDatabase();
 		if(persDBRead.isOpen()){
-			Cursor c = persDBRead.rawQuery("SELECT * FROM PERSONA", null);
+			Cursor c = persDBRead.rawQuery("SELECT * FROM PERSONA ORDER BY "+campo, null);
 			if(c.moveToFirst()){
 				do{
 					arrayPersonas.add(new Persona(c.getInt(c.getColumnIndex("_ID")),

@@ -57,7 +57,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		grupo.setEnabled(false);
 		
 		Persona persona = new Persona();
-		arrayPersonas = persona.findAll(this);
+		arrayPersonas = persona.findAll(this, null);
 		Iterator<Persona> miIterator = arrayPersonas.iterator();
 		while(miIterator.hasNext()){
 			Persona pers = miIterator.next();
@@ -107,7 +107,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			   			Persona persona = new Persona();
 			   			Context context = MainActivity.this;
 			   			persona.delete(context, IdSeleccionado);
-			   			arrayPersonas = persona.findAll(context);
+			   			arrayPersonas = persona.findAll(context, null);
 			   			Iterator<Persona> miIterator = arrayPersonas.iterator();
 			   			while(miIterator.hasNext()){
 			   				Persona pers = miIterator.next();
