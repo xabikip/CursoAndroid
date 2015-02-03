@@ -24,6 +24,7 @@ public class TablaPersonas extends Activity implements OnClickListener{
 	private Button bt;
 	private TableRow tr;
 	private TextView text;
+	private int cont=1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +37,20 @@ public class TablaPersonas extends Activity implements OnClickListener{
 			FileInputStream fi = openFileInput("personas.txt");
 			DataInputStream entrada = new DataInputStream(fi);
 			while ((linea=entrada.readLine())!=null) {
-		          tr = new TableRow(this);
-		          text = new TextView(this);
-		          text.setText(linea);
-		          tr.addView(text);
-		          tl.addView(tr);
+				tr = new TableRow(this);
+				text = new TextView(this);
+				text.setText("PERSONA "+ cont);
+				tr.addView(text);
+				tl.addView(tr);
+				String[] split = linea.split(";");
+				for (int i = 0; i < split.length; i++) {
+					tr = new TableRow(this);
+					text = new TextView(this);
+					text.setText(split[i]);
+					tr.addView(text);
+					tl.addView(tr);
+				}
+				cont++;
 		    }
 			entrada.close();
 		} catch (FileNotFoundException e) {

@@ -167,11 +167,11 @@ public class Buscar extends Activity implements OnClickListener, OnCheckedChange
 				esrcibirFichero(arrayPersonas);
 			}else if(this.checked.equals("telf")){
 				Persona persona = new Persona();
-				arrayPersonas = persona.findAll(this, "telf");
+				arrayPersonas = persona.findAll(this, "telefono");
 				esrcibirFichero(arrayPersonas);
 			}else if(this.checked.equals("desc")){
 				Persona persona = new Persona();
-				arrayPersonas = persona.findAll(this, "desc");
+				arrayPersonas = persona.findAll(this, "descripcion");
 				esrcibirFichero(arrayPersonas);
 			}else if(this.checked.equals("grupo")){
 				Persona persona = new Persona();
@@ -190,12 +190,13 @@ public class Buscar extends Activity implements OnClickListener, OnCheckedChange
 			while(it.hasNext())
 			{	
 				Persona pers = it.next();
-				dos.writeBytes("Nombre: " + pers.getNombre().toString() + "\t");
-				dos.writeBytes("Apellido: "  + pers.getApellido().toString() + "\t");
-				dos.writeBytes("Telefono: " + pers.getTelf().toString() + "\t");
-				dos.writeBytes("Descripcion: " + pers.getDesc().toString() + "\t");
-				dos.writeBytes("Grupo: " + pers.getGrupo().toString() + "\t");
-				dos.writeBytes("\r\n");
+				dos.writeBytes("Nombre:"+pers.getNombre().toString() + "; ");
+				dos.writeBytes("Apellido:"+ pers.getApellido().toString() + "; ");
+				dos.writeBytes("Telefono:" + pers.getTelf().toString() + "; ");
+				dos.writeBytes("Descripcion:" + pers.getDesc().toString() + "; ");
+				dos.writeBytes("Grupo:" + pers.getGrupo().toString() + "; ");
+				
+				if(it.hasNext())dos.writeBytes("\r\n");
 			}
 			dos.close();
 			fichero.close();
