@@ -1,7 +1,9 @@
 package com.example.listviewfechaasunto;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -17,12 +19,13 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+
 public class MainActivity extends ListActivity implements OnClickListener{
 	
 	private List<String> ArrayDia=null;
 	private List<String> ArrayMes=null;
 	private List<String> ArrayAno=null;
-	private List<String> ArrayLista=null;
+	private ArrayList<String> ArrayLista=null;
 	private ArrayAdapter<String> adaptDia=null;
 	private ArrayAdapter<String> adaptMes=null;
 	private ArrayAdapter<String> adaptAno=null;
@@ -30,6 +33,8 @@ public class MainActivity extends ListActivity implements OnClickListener{
 	private Spinner spinDia, spinMes, spinAno;
 	private Button boton;
 	private EditText asunto;
+	private DBhelper db;
+	private ArrayList<String[]> entradas = new ArrayList<String[]>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +82,16 @@ public class MainActivity extends ListActivity implements OnClickListener{
 		ArrayLista=new ArrayList<String>();
 		adaptLista=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,ArrayLista);
 		setListAdapter(adaptLista);
+		
+		db = new DBhelper(this, "agenda", null, 1);
+		entradas = db.findAll();
+		Iterator<String[]> it = entradas.iterator();	
+		while(it.hasNext())
+		{	
+		String[] obj = it.next();
+		ArrayLista.add(obj[1]+" de "+obj[2]+" del "+obj[3]+"\r\n"+obj[4]);			
+		}
+		
 	}
 
 	@Override
@@ -102,6 +117,10 @@ public class MainActivity extends ListActivity implements OnClickListener{
 	public void onClick(View v) {
 		if (v.getId()==R.id.boton1){
 			if(is_empty()){
+				db.save(asunto.getText().toString(), 
+						spinDia.getSelectedItem().toString(), 
+						spinMes.getSelectedItem().toString(),
+						spinAno.getSelectedItem().toString());
 				ArrayLista.add(spinDia.getSelectedItem().toString()+ " de " +
 						spinMes.getSelectedItem().toString()+ " del " +
 						spinAno.getSelectedItem().toString()+ " \n" +
@@ -125,6 +144,7 @@ public class MainActivity extends ListActivity implements OnClickListener{
 	           public void onClick(DialogInterface dialog, int id) {
 	        	   ArrayLista.remove(position);
 	        	   adaptLista.notifyDataSetChanged();
+	        	   db.delete(position);
 	           }
 	       });
 		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
