@@ -1,8 +1,6 @@
 package com.example.listviewfechaasunto;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -58,7 +56,7 @@ public class DBhelper extends SQLiteOpenHelper {
 		return id;
 	}
 	
-	@SuppressWarnings("null")
+
 	public ArrayList<String[]> findAll(){
 
 		ArrayList<String[]> arrayAsuntos = new ArrayList<String[]>();
