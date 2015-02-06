@@ -3,10 +3,7 @@ package com.example.listviewfechaasunto;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -93,25 +90,6 @@ public class MainActivity extends Activity implements OnClickListener{
 		datos.add(new lista_entrada(R.drawable.ic_launcher,obj[2]+" de "+obj[3]+" del "+obj[4], obj[1]));			
 		}
 		lista = (ListView)findViewById(R.id.ListView_listado);
-		setAdaptador();
-		
-		lista.setOnItemClickListener(new OnItemClickListener(){
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// TODO Auto-generated method stub
-				lista_entrada elegido = (lista_entrada)parent.getItemAtPosition(position);
-				datos.remove(position);
-	        	setAdaptador();
-	        	db.delete(position);
-				
-			}
-			
-		});
-		
-	}
-
-	private void setAdaptador() {
 		lista.setAdapter(new Lista_adaptador(this, R.layout.entrada, datos){
 
 			@Override
@@ -134,6 +112,20 @@ public class MainActivity extends Activity implements OnClickListener{
 			}
 			
 		});
+		
+		lista.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				// TODO Auto-generated method stub
+				datos.remove(position);
+				((Lista_adaptador)lista.getAdapter()).notifyDataSetChanged();
+	        	db.delete(position);
+				
+			}
+			
+		});
+		
 	}
 
 	@Override
@@ -167,7 +159,7 @@ public class MainActivity extends Activity implements OnClickListener{
 						spinMes.getSelectedItem().toString()+ " del " +
 						spinAno.getSelectedItem().toString(),
 						asunto.getText().toString()));
-				setAdaptador();
+				((Lista_adaptador)lista.getAdapter()).notifyDataSetChanged();
 				asunto.setText("");
 			}else{
 				Toast toast = Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT);
@@ -177,26 +169,26 @@ public class MainActivity extends Activity implements OnClickListener{
 		
 	}
 	
-	public void onListItemClick(ListView l, View v,final int position, long id){
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(R.string.mensaje)
-	           .setTitle(R.string.titulo);
-		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-	           public void onClick(DialogInterface dialog, int id) {
-	        	   datos.remove(position);
-	        	   setAdaptador();
-	        	   db.delete(position);
-	           }
-	       });
-		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-	           public void onClick(DialogInterface dialog, int id) {
-	               // User cancelled the dialog
-	           }
-	       });
-		AlertDialog dialog = builder.create();
-		dialog.show();
-		
-	}
+//	public void onListItemClick(ListView l, View v,final int position, long id){
+//		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//		builder.setMessage(R.string.mensaje)
+//	           .setTitle(R.string.titulo);
+//		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+//	           public void onClick(DialogInterface dialog, int id) {
+//	        	   datos.remove(position);
+//	        	   setAdaptador();
+//	        	   db.delete(position);
+//	           }
+//	       });
+//		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+//	           public void onClick(DialogInterface dialog, int id) {
+//	               // User cancelled the dialog
+//	           }
+//	       });
+//		AlertDialog dialog = builder.create();
+//		dialog.show();
+//		
+//	}
 	
 	private boolean is_empty() {
 		if(asunto.getText().toString().trim().length() == 0 ){
