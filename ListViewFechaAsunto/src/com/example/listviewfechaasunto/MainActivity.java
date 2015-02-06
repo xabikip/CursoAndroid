@@ -4,37 +4,41 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainActivity extends ListActivity implements OnClickListener{
+public class MainActivity extends Activity implements OnClickListener{
 	
 	private List<String> ArrayDia=null;
 	private List<String> ArrayMes=null;
 	private List<String> ArrayAno=null;
-	private ArrayList<String> ArrayLista=null;
+	private ArrayList<lista_entrada> datos=null;
 	private ArrayAdapter<String> adaptDia=null;
 	private ArrayAdapter<String> adaptMes=null;
 	private ArrayAdapter<String> adaptAno=null;
-	private ArrayAdapter<String> adaptLista=null;
 	private Spinner spinDia, spinMes, spinAno;
 	private Button boton;
 	private EditText asunto;
 	private DBhelper db;
 	private ArrayList<String[]> entradas = new ArrayList<String[]>();
+	private ListView lista;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,19 +83,57 @@ public class MainActivity extends ListActivity implements OnClickListener{
 		adaptAno=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,ArrayAno);
 		spinAno.setAdapter(adaptAno);
 		
-		ArrayLista=new ArrayList<String>();
-		adaptLista=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,ArrayLista);
-		setListAdapter(adaptLista);
-		
+		datos=new ArrayList<lista_entrada>();
 		db = new DBhelper(this, "agenda", null, 1);
 		entradas = db.findAll();
 		Iterator<String[]> it = entradas.iterator();	
 		while(it.hasNext())
 		{	
 		String[] obj = it.next();
-		ArrayLista.add(obj[1]+" de "+obj[2]+" del "+obj[3]+"\r\n"+obj[4]);			
+		datos.add(new lista_entrada(R.drawable.ic_launcher,obj[2]+" de "+obj[3]+" del "+obj[4], obj[1]));			
 		}
+		lista = (ListView)findViewById(R.id.ListView_listado);
+		setAdaptador();
 		
+		lista.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				// TODO Auto-generated method stub
+				lista_entrada elegido = (lista_entrada)parent.getItemAtPosition(position);
+				datos.remove(position);
+	        	setAdaptador();
+	        	db.delete(position);
+				
+			}
+			
+		});
+		
+	}
+
+	private void setAdaptador() {
+		lista.setAdapter(new Lista_adaptador(this, R.layout.entrada, datos){
+
+			@Override
+			public void onEntrada(Object entrada, View view) {
+				// TODO Auto-generated method stub
+				if(entrada != null){
+					TextView txtSupEntrada = (TextView)view.findViewById(R.id.TextV_superior);
+					if(txtSupEntrada != null){
+						txtSupEntrada.setText(((lista_entrada)entrada).getTxtSup());
+					}
+					TextView txtInfEntrada = (TextView)view.findViewById(R.id.TextV_inferior);
+					if(txtInfEntrada != null){
+						txtInfEntrada.setText(((lista_entrada)entrada).getTxtInf());
+					}
+					ImageView imagen = (ImageView)view.findViewById(R.id.imagen);
+					if(imagen != null){
+						imagen.setImageResource(((lista_entrada)entrada).getIdImagen());
+					}
+				}
+			}
+			
+		});
 	}
 
 	@Override
@@ -121,11 +163,11 @@ public class MainActivity extends ListActivity implements OnClickListener{
 						spinDia.getSelectedItem().toString(), 
 						spinMes.getSelectedItem().toString(),
 						spinAno.getSelectedItem().toString());
-				ArrayLista.add(spinDia.getSelectedItem().toString()+ " de " +
+				datos.add(new lista_entrada(R.drawable.ic_launcher, spinDia.getSelectedItem().toString()+ " de " +
 						spinMes.getSelectedItem().toString()+ " del " +
-						spinAno.getSelectedItem().toString()+ " \n" +
-						asunto.getText().toString());
-				adaptLista.notifyDataSetChanged();
+						spinAno.getSelectedItem().toString(),
+						asunto.getText().toString()));
+				setAdaptador();
 				asunto.setText("");
 			}else{
 				Toast toast = Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT);
@@ -135,15 +177,14 @@ public class MainActivity extends ListActivity implements OnClickListener{
 		
 	}
 	
-	@Override
 	public void onListItemClick(ListView l, View v,final int position, long id){
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(R.string.mensaje)
 	           .setTitle(R.string.titulo);
 		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 	           public void onClick(DialogInterface dialog, int id) {
-	        	   ArrayLista.remove(position);
-	        	   adaptLista.notifyDataSetChanged();
+	        	   datos.remove(position);
+	        	   setAdaptador();
 	        	   db.delete(position);
 	           }
 	       });
