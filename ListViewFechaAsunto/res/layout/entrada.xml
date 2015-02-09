@@ -6,8 +6,8 @@
     
     <ImageView
         android:id="@+id/imagen"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:contentDescription="Descripcion de la imagen"
@@ -22,7 +22,9 @@
             android:id="@+id/TextV_superior"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:textColor="#45BD1A"
+    		android:typeface="monospace"
+    		android:textSize="16sp"/>
         <TextView
             android:id="@+id/TextV_inferior"
             android:layout_width="wrap_content"
