@@ -1,0 +1,154 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contenedor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.guardarpersonas.MainActivity" >
+
+    <Button 
+        android:id="@+id/editar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:enabled="false"
+        android:text="@string/editar"/>
+   
+    <Button 
+        android:id="@+id/nuevo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/editar"
+        android:layout_alignParentTop="true"
+        android:text="@string/nuevo"/>
+    
+    <Button 
+        android:id="@+id/borrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/nuevo"
+        android:layout_alignParentTop="true"
+        android:text="@string/borrar"/>
+    
+    <Button 
+        android:id="@+id/buscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/borrar"
+        android:layout_alignParentTop="true"
+        android:enabled="true"
+        android:text="@string/buscar"/>
+    
+    <LinearLayout 
+        android:id="@+id/formulario"
+        android:layout_below="@id/nuevo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <LinearLayout 
+            android:id="@+id/linea1"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:orientation="horizontal">
+	        
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvNombre"
+                android:text="@string/nombreLabel"/>
+            
+            <EditText android:id="@+id/nombre"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/nombreHint"/>
+            
+        </LinearLayout>
+        <LinearLayout 
+            android:id="@+id/linea2"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:orientation="horizontal">
+	        
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvApellido"
+                android:text="@string/apellidoLabel"/>
+            <EditText android:id="@+id/apellido"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/apelidoHint"/>
+            
+        </LinearLayout>
+        <LinearLayout 
+            android:id="@+id/linea3"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:orientation="horizontal">
+	        
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvTel"
+                android:text="@string/telfLabel"/>
+            <EditText android:id="@+id/telf"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/telfHint"/>
+            
+        </LinearLayout>
+        <LinearLayout 
+            android:id="@+id/linea4"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:orientation="horizontal">
+	        
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvdesc"
+                android:text="@string/descLabel"/>
+            <EditText android:id="@+id/desc"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/descHint"/>
+        </LinearLayout>
+        <LinearLayout 
+            android:id="@+id/linea5"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:orientation="horizontal">
+	        
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvgrupo"
+                android:text="@string/grupoLabel"/>
+            <EditText android:id="@+id/grupo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/grupoHint"/>
+        </LinearLayout>
+    </LinearLayout>
+    
+    <HorizontalScrollView
+           android:layout_height="wrap_content"
+           android:layout_width="match_parent"
+           android:layout_alignParentBottom="true">
+        <LinearLayout
+		    android:id="@+id/botones"
+		    android:orientation="horizontal"
+		    android:layout_height="wrap_content"
+		    android:layout_width="wrap_content">
+		</LinearLayout>
+    </HorizontalScrollView>
+    
+	
+
+</RelativeLayout>
