@@ -20,5 +20,13 @@
         <item name="android:background"> @drawable/boton_press_background</item>
         <item name="android:textColor"> @drawable/boton_press_text</item>
     </style>
+    
+    <style name="general_layout">
+        <item name="android:background">#4FE535</item>
+    </style>
+    
+    <style name="entrada">
+        <item name="android:background">#D9D5A0</item>
+    </style>
 
 </resources>

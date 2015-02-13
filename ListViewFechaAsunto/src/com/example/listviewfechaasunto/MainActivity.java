@@ -162,33 +162,13 @@ public class MainActivity extends Activity implements OnClickListener{
 				((Lista_adaptador)lista.getAdapter()).notifyDataSetChanged();
 				asunto.setText("");
 			}else{
-				Toast toast = Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT);
-				toast.show();
+				CustomToast miToast = new CustomToast(this, Toast.LENGTH_LONG);
+				miToast.show("Tienes que rellenar el asunto!");
 			}
 		}
 		
 	}
 	
-//	public void onListItemClick(ListView l, View v,final int position, long id){
-//		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//		builder.setMessage(R.string.mensaje)
-//	           .setTitle(R.string.titulo);
-//		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-//	           public void onClick(DialogInterface dialog, int id) {
-//	        	   datos.remove(position);
-//	        	   setAdaptador();
-//	        	   db.delete(position);
-//	           }
-//	       });
-//		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-//	           public void onClick(DialogInterface dialog, int id) {
-//	               // User cancelled the dialog
-//	           }
-//	       });
-//		AlertDialog dialog = builder.create();
-//		dialog.show();
-//		
-//	}
 	
 	private boolean is_empty() {
 		if(asunto.getText().toString().trim().length() == 0 ){
