@@ -21,6 +21,12 @@ public class VistaPunto extends View{
 		canvas.drawPoint(20, 20, paint);
 		canvas.drawPoint(50, 50, paint);
 		canvas.drawPoint(100, 100, paint);
+		
+		Paint linea = new Paint();
+		paint.setColor(Color.BLACK);
+		canvas.drawLine(20, 20, 50, 50, linea);
+		canvas.drawLine(50, 50, 100, 100, linea);
 	}
+	
 
 }
