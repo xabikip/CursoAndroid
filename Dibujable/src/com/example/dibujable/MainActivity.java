@@ -10,7 +10,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(new VistaPunto(this));
+		setContentView(new PuntosCardinales(this));
 	}
 
 	@Override
